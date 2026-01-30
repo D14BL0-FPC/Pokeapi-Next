@@ -1,0 +1,15 @@
+{
+  "welcome": "¡Bienvenido a la PokeApp!",
+  "home": "Inicio",
+  "contact": "Contacto",
+  "generations": "Generaciones",
+  "gen1": "Primera Generación",
+  "gen2": "Segunda Generación",
+  "gen3": "Tercera Generación",
+  "footer": "Derechos reservados 2024",
+  "loading": "Cargando...",
+  "error": "Ha ocurrido un error",
+  "contact_text": "Esta web está generada en NEXT por el alumno Francisco Parra Caparrós del IES Cura Valera.",
+  "details": "Ver detalles",
+  "stats": { "hp": "Vida", "attack": "Ataque", "defense": "Defensa" }
+}
