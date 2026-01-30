@@ -1,10 +1,12 @@
 "use client";
-import { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import es from '../messages/es.json';
 import en from '../messages/en.json';
-import fr from '../messages/jp.json';
+import jp from '../messages/jp.json';
 
-const translations: any = { es, en, fr };
+// Definimos las traducciones disponibles
+const translations: any = { es, en, jp };
+
 const LanguageContext = createContext<any>(null);
 
 export const LanguageProvider = ({ children }: { children: React.ReactNode }) => {
