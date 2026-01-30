@@ -2,7 +2,7 @@
 import { createContext, useContext, useState } from 'react';
 import es from '../messages/es.json';
 import en from '../messages/en.json';
-import fr from '../messages/fr.json';
+import fr from '../messages/jp.json';
 
 const translations: any = { es, en, fr };
 const LanguageContext = createContext<any>(null);
