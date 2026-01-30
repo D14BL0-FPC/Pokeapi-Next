@@ -1,40 +1,47 @@
 "use client";
 import { useLanguage } from '@/context/LanguageContext';
 
-// Añadimos showButton como prop opcional que por defecto es true
 export default function PokemonCard({ pokemon, showButton = true }: { pokemon: any, showButton?: boolean }) {
   const { t } = useLanguage();
 
   return (
-    <div className="animate-card bg-white rounded-[2.5rem] p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_50px_rgba(59,130,246,0.1)] transition-all duration-500 border border-slate-100 group">
-      <div className="relative">
-        <span className="absolute top-0 left-0 text-[3rem] font-black text-slate-50 opacity-10 select-none">
-          #{pokemon.id.toString().padStart(3, '0')}
-        </span>
-        
-        <div className="relative h-48 flex items-center justify-center">
-          <div className="absolute w-32 h-32 bg-slate-50 rounded-full group-hover:scale-110 transition-transform duration-500" />
+    <div className="pokedex-red p-3 rounded-tr-[50px] rounded-bl-[50px] rounded-tl-lg rounded-br-lg border-4 border-red-900 shadow-xl group">
+      {/* "Pantalla" Interior */}
+      <div className="bg-white rounded-lg p-4 border-4 border-slate-300 flex flex-col items-center">
+        <div className="w-full flex justify-between items-center mb-2 px-1">
+          <span className="text-[10px] font-bold text-slate-400">ID: {pokemon.id}</span>
+          <div className="flex gap-1">
+            <div className="w-1.5 h-1.5 rounded-full bg-red-500" />
+            <div className="w-1.5 h-1.5 rounded-full bg-red-500" />
+          </div>
+        </div>
+
+        <div className="bg-slate-100 rounded-md w-full py-4 flex justify-center border-2 border-slate-200 inner-shadow">
           <img 
             src={pokemon.sprites.other['official-artwork'].front_default || pokemon.sprites.front_default} 
             alt={pokemon.name} 
-            className="w-40 h-40 object-contain relative z-10 drop-shadow-2xl group-hover:-translate-y-4 transition-transform duration-500"
+            className="w-32 h-32 object-contain drop-shadow-md group-hover:scale-110 transition-transform"
           />
         </div>
 
-        <div className="text-center mt-4">
-          <p className="text-[10px] font-bold text-blue-500 uppercase tracking-[0.2em] mb-1">
-            {pokemon.types[0].type.name}
-          </p>
-          <h3 className="text-2xl font-black text-slate-800 capitalize mb-2 italic">
-            {pokemon.name}
-          </h3>
-          
-          {/* Solo mostramos el botón si showButton es true */}
-          {showButton && (
-            <button className="w-full py-4 mt-4 rounded-2xl bg-slate-900 text-white text-xs font-black uppercase tracking-widest hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-200 transition-all active:scale-95">
-              {t.details}
-            </button>
-          )}
+        <h3 className="text-lg font-black uppercase text-slate-800 mt-4 tracking-tighter">
+          {pokemon.name}
+        </h3>
+
+        {showButton && (
+          <button className="mt-4 w-full bg-slate-800 text-white font-bold py-2 rounded-md hover:bg-blue-600 transition-colors flex items-center justify-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
+            {t.details}
+          </button>
+        )}
+      </div>
+      
+      {/* Detalles Estéticos del chasis */}
+      <div className="flex justify-between mt-2 px-4">
+        <div className="w-8 h-2 bg-red-900 rounded-full" />
+        <div className="flex gap-1">
+            <div className="w-3 h-3 bg-blue-900 rounded-full border border-red-900" />
+            <div className="w-3 h-3 bg-green-900 rounded-full border border-red-900" />
         </div>
       </div>
     </div>

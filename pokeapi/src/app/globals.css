@@ -2,24 +2,18 @@
 
 @layer base {
   body {
-    @apply bg-slate-50 text-slate-900 antialiased;
-    background-image: 
-      radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.05) 0px, transparent 50%),
-      radial-gradient(at 100% 0%, rgba(234, 179, 8, 0.05) 0px, transparent 50%);
+    @apply bg-slate-200 text-slate-900 antialiased;
+    background-image: radial-gradient(#d1d5db 1px, transparent 1px), radial-gradient(#d1d5db 1px, transparent 1px);
+    background-size: 20px 20px;
+    background-position: 0 0, 10px 10px;
   }
 }
 
-/* Efecto de cristal para el Navbar */
-.glass-nav {
-  @apply sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200;
+.pokedex-red { background-color: #dc0a2d; }
+.led-blue { 
+  background: radial-gradient(circle at 30% 30%, #2196f3, #004ba0); 
+  box-shadow: 0 0 10px #2196f3; 
 }
-
-/* Animación suave para la entrada de las cards */
-@keyframes fadeInScale {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-.animate-card {
-  animation: fadeInScale 0.4s ease-out forwards;
-}
+.led-red { background: radial-gradient(circle at 30% 30%, #ff5252, #a70000); }
+.led-yellow { background: radial-gradient(circle at 30% 30%, #ffeb3b, #c6a700); }
+.led-green { background: radial-gradient(circle at 30% 30%, #4caf50, #00701a); }

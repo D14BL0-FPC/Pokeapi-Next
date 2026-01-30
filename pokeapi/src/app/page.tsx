@@ -7,12 +7,10 @@ export default function HomePage() {
   const context = useLanguage();
   const [pokemon, setPokemon] = useState<any>(null);
 
-  // 1. Verificamos que el contexto exista para evitar errores
-  if (!context) return null;
-  const { t } = context; // Aquí es donde se define 't'
+  if (!context) return null; // Protección de contexto
+  const { t } = context;
 
   useEffect(() => {
-    // Generamos un Pokémon aleatorio de la primera generación para la bienvenida
     const randomId = Math.floor(Math.random() * 151) + 1;
     fetch(`https://pokeapi.co/api/v2/pokemon/${randomId}`)
       .then(res => res.json())
@@ -20,19 +18,13 @@ export default function HomePage() {
   }, []);
 
   return (
-    <main className="p-8 text-center flex flex-col items-center justify-center min-h-[70vh]">
-      <h1 className="text-4xl font-black mb-12 bg-gradient-to-r from-blue-600 to-yellow-500 bg-clip-text text-transparent">
-        {t.welcome}
-      </h1>
-      
-      <div className="max-w-sm w-full">
-        {/* 2. Pasamos showButton={false} para que no salga el botón en el inicio */}
-        {pokemon && (
-          <PokemonCard 
-            pokemon={pokemon} 
-            showButton={false} 
-          />
-        )}
+    <main className="min-h-[80vh] flex flex-col items-center p-10">
+      <div className="bg-slate-800 p-6 rounded-lg border-l-8 border-blue-500 shadow-2xl mb-10 max-w-2xl w-full">
+        <h1 className="text-2xl font-mono font-bold text-blue-400">&gt; {t.welcome}_</h1>
+      </div>
+      <div className="w-full max-w-xs transform hover:rotate-1 transition-transform">
+        {/* Sin botón de detalles en el inicio */}
+        {pokemon && <PokemonCard pokemon={pokemon} showButton={false} />}
       </div>
     </main>
   );

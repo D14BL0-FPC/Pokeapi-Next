@@ -3,43 +3,77 @@ import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
 
 export default function Navbar() {
-  const { t, setLang, lang } = useLanguage();
+  const context = useLanguage();
+
+  // PROTECCIÓN: Si el contexto aún no está listo, devolvemos un diseño básico
+  // Esto evita definitivamente el error "reading 'home'"
+  if (!context) {
+    return (
+      <header className="pokedex-red border-b-8 border-red-900 shadow-2xl sticky top-0 z-50 h-20 w-full" />
+    );
+  }
+
+  const { t, setLang, lang } = context;
 
   return (
-    <header className="glass-nav">
-      <div className="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
-        <Link href="/" className="group flex items-center gap-2">
-          <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center shadow-lg group-hover:rotate-180 transition-transform duration-500">
-            <div className="w-8 h-8 border-4 border-white rounded-full flex items-center justify-center">
-              <div className="w-2 h-2 bg-white rounded-full"></div>
-            </div>
+    <header className="pokedex-red border-b-8 border-red-900 shadow-2xl sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        
+        {/* Leds Superiores y Logo */}
+        <div className="flex items-start gap-4">
+          <Link href="/" className="w-12 h-12 md:w-16 md:h-16 rounded-full border-4 border-white led-blue flex-shrink-0 shadow-lg hover:brightness-110 transition-all" />
+          <div className="flex gap-2 mt-1">
+            <div className="w-3 h-3 md:w-4 md:h-4 rounded-full border-2 border-red-900 led-red" />
+            <div className="w-3 h-3 md:w-4 md:h-4 rounded-full border-2 border-red-900 led-yellow" />
+            <div className="w-3 h-3 md:w-4 md:h-4 rounded-full border-2 border-red-900 led-green" />
           </div>
-          <span className="text-xl font-black tracking-tighter text-slate-800">POKEAPP</span>
-        </Link>
+        </div>
 
-        <nav className="hidden md:flex items-center gap-8 text-sm font-bold uppercase tracking-widest text-slate-500">
-          <Link href="/" className="hover:text-blue-600 transition-colors">{t.home}</Link>
-          <div className="relative group">
-            <button className="flex items-center gap-1 hover:text-blue-600 transition-colors py-8">
+        {/* Menú de Navegación con Dropdown de Generaciones */}
+        <nav className="hidden md:flex gap-8 font-bold text-white uppercase text-xs tracking-widest items-center">
+          <Link href="/" className="hover:text-yellow-400 transition-colors">
+            {t.home}
+          </Link>
+
+          {/* APARTADO GENERACIONES (DESPLEGABLE) */}
+          <div className="relative group py-4">
+            <button className="flex items-center gap-1 hover:text-yellow-400 transition-colors uppercase font-bold text-xs tracking-widest">
               {t.generations}
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7"></path>
+              </svg>
             </button>
-            <div className="absolute hidden group-hover:block top-full left-0 w-56 bg-white shadow-2xl rounded-2xl border border-slate-100 p-2 overflow-hidden transform origin-top animate-in fade-in zoom-in duration-200">
-              {[1, 2, 3].map((num) => (
-                <Link key={num} href={`/generation/${num}`} className="block px-4 py-3 hover:bg-slate-50 rounded-xl transition-colors text-slate-700 normal-case font-semibold">
-                  {t[`gen${num}`]}
-                </Link>
-              ))}
+            
+            {/* El Menú Desplegable */}
+            <div className="absolute hidden group-hover:block top-full left-0 w-48 bg-white shadow-2xl rounded-xl border-4 border-red-900 p-2 animate-in fade-in slide-in-from-top-2">
+              <Link href="/generation/1" className="block px-4 py-2 hover:bg-red-50 text-slate-800 rounded-lg transition-colors border-b border-slate-100 last:border-0">
+                {t.gen1}
+              </Link>
+              <Link href="/generation/2" className="block px-4 py-2 hover:bg-red-50 text-slate-800 rounded-lg transition-colors border-b border-slate-100 last:border-0">
+                {t.gen2}
+              </Link>
+              <Link href="/generation/3" className="block px-4 py-2 hover:bg-red-50 text-slate-800 rounded-lg transition-colors">
+                {t.gen3}
+              </Link>
             </div>
           </div>
-          <Link href="/contacto" className="hover:text-blue-600 transition-colors">{t.contact}</Link>
+
+          <Link href="/contacto" className="hover:text-yellow-400 transition-colors">
+            {t.contact}
+          </Link>
         </nav>
 
-        <div className="flex gap-1 bg-slate-100 p-1.5 rounded-full border border-slate-200">
-          {['es', 'en', 'fr'].map((l) => (
+        {/* Selectores de Idioma Estilo Botón Consola */}
+        <div className="flex gap-1 md:gap-2">
+          {['es', 'en', 'jp'].map((l) => (
             <button
               key={l}
               onClick={() => setLang(l)}
-              className={`px-4 py-1.5 rounded-full text-xs font-black transition-all ${lang === l ? 'bg-white shadow-md text-blue-600' : 'text-slate-400 hover:text-slate-600'}`}
+              className={`px-3 py-1 rounded border-2 border-red-900 font-black text-[10px] transition-all shadow-sm ${
+                lang === l 
+                  ? 'bg-yellow-400 text-black scale-110 shadow-md border-yellow-600' 
+                  : 'bg-slate-700 text-white hover:bg-slate-600'
+              }`}
             >
               {l.toUpperCase()}
             </button>
