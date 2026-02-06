@@ -6,7 +6,8 @@ import { useLanguage } from '@/context/LanguageContext';
 const genRanges: any = {
   '1': { min: 1, max: 151 },
   '2': { min: 152, max: 251 },
-  '3': { min: 252, max: 386 }
+  '3': { min: 252, max: 386 },
+  '4': { min: 387, max: 493 },
 };
 
 export default function GenerationPage({ params }: { params: Promise<{ id: string }> }) {

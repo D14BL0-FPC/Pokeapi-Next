@@ -5,8 +5,7 @@ import { useLanguage } from '@/context/LanguageContext';
 export default function Navbar() {
   const context = useLanguage();
 
-  // PROTECCIÓN: Si el contexto aún no está listo, devolvemos un diseño básico
-  // Esto evita definitivamente el error "reading 'home'"
+  // Protección contra el error "Cannot read properties of undefined (reading 'home')"
   if (!context) {
     return (
       <header className="pokedex-red border-b-8 border-red-900 shadow-2xl sticky top-0 z-50 h-20 w-full" />
@@ -29,7 +28,7 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Menú de Navegación con Dropdown de Generaciones */}
+        {/* Menú de Navegación */}
         <nav className="hidden md:flex gap-8 font-bold text-white uppercase text-xs tracking-widest items-center">
           <Link href="/" className="hover:text-yellow-400 transition-colors">
             {t.home}
@@ -44,17 +43,16 @@ export default function Navbar() {
               </svg>
             </button>
             
-            {/* El Menú Desplegable */}
             <div className="absolute hidden group-hover:block top-full left-0 w-48 bg-white shadow-2xl rounded-xl border-4 border-red-900 p-2 animate-in fade-in slide-in-from-top-2">
-              <Link href="/generation/1" className="block px-4 py-2 hover:bg-red-50 text-slate-800 rounded-lg transition-colors border-b border-slate-100 last:border-0">
-                {t.gen1}
-              </Link>
-              <Link href="/generation/2" className="block px-4 py-2 hover:bg-red-50 text-slate-800 rounded-lg transition-colors border-b border-slate-100 last:border-0">
-                {t.gen2}
-              </Link>
-              <Link href="/generation/3" className="block px-4 py-2 hover:bg-red-50 text-slate-800 rounded-lg transition-colors">
-                {t.gen3}
-              </Link>
+              {[1, 2, 3, 4].map((num) => (
+                <Link 
+                  key={num} 
+                  href={`/generation/${num}`} 
+                  className="block px-4 py-2 hover:bg-red-50 text-slate-800 rounded-lg transition-colors border-b border-slate-100 last:border-0"
+                >
+                  {t[`gen${num}`]}
+                </Link>
+              ))}
             </div>
           </div>
 
@@ -63,13 +61,13 @@ export default function Navbar() {
           </Link>
         </nav>
 
-        {/* Selectores de Idioma Estilo Botón Consola */}
+        {/* Selectores de Idioma (ES, EN, JP) */}
         <div className="flex gap-1 md:gap-2">
           {['es', 'en', 'jp'].map((l) => (
             <button
               key={l}
               onClick={() => setLang(l)}
-              className={`px-3 py-1 rounded border-2 border-red-900 font-black text-[10px] transition-all shadow-sm ${
+              className={`px-3 py-1 rounded border-2 border-red-900 font-black text-[10px] transition-all ${
                 lang === l 
                   ? 'bg-yellow-400 text-black scale-110 shadow-md border-yellow-600' 
                   : 'bg-slate-700 text-white hover:bg-slate-600'
