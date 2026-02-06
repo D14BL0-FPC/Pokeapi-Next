@@ -35,26 +35,48 @@ export default function Navbar() {
           </Link>
 
           {/* APARTADO GENERACIONES (DESPLEGABLE) */}
-          <div className="relative group py-4">
-            <button className="flex items-center gap-1 hover:text-yellow-400 transition-colors uppercase font-bold text-xs tracking-widest">
-              {t.generations}
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7"></path>
-              </svg>
-            </button>
-            
-            <div className="absolute hidden group-hover:block top-full left-0 w-48 bg-white shadow-2xl rounded-xl border-4 border-red-900 p-2 animate-in fade-in slide-in-from-top-2">
-              {[1, 2, 3, 4].map((num) => (
-                <Link 
-                  key={num} 
-                  href={`/generation/${num}`} 
-                  className="block px-4 py-2 hover:bg-red-50 text-slate-800 rounded-lg transition-colors border-b border-slate-100 last:border-0"
-                >
-                  {t[`gen${num}`]}
-                </Link>
-              ))}
-            </div>
-          </div>
+<div className="relative group py-4">
+  <button className="flex items-center gap-1 hover:text-yellow-400 transition-colors uppercase font-bold text-xs tracking-widest">
+    {t.generations}
+    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7"></path>
+    </svg>
+  </button>
+  
+  <div className="absolute hidden group-hover:block top-full left-0 w-48 bg-white shadow-2xl rounded-xl border-4 border-red-900 p-2 animate-in fade-in slide-in-from-top-2">
+    {/* Generaciones 1 y 2 directas */}
+    {[1, 2].map((num) => (
+      <Link 
+        key={num} 
+        href={`/generation/${num}`} 
+        className="block px-4 py-2 hover:bg-red-50 text-slate-800 rounded-lg transition-colors border-b border-slate-100"
+      >
+        {t[`gen${num}`]}
+      </Link>
+    ))}
+
+    {/* SUBMENÚ: OTROS (Contiene 3 y 4) */}
+    <div className="relative group/sub">
+      <div className="flex items-center justify-between px-4 py-2 hover:bg-red-50 text-slate-800 rounded-lg cursor-pointer transition-colors">
+        <span className="font-bold">{t.other || "Otros"}</span>
+        <span>➨</span>
+      </div>
+      
+      {/* El Submenú que sale a la derecha */}
+      <div className="absolute hidden group-hover/sub:block top-0 left-full ml-2 w-48 bg-white shadow-2xl rounded-xl border-4 border-red-900 p-2">
+        {[3, 4].map((num) => (
+          <Link 
+            key={num} 
+            href={`/generation/${num}`} 
+            className="block px-4 py-2 hover:bg-red-50 text-slate-800 rounded-lg transition-colors border-b border-slate-100 last:border-0"
+          >
+            {t[`gen${num}`]}
+          </Link>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
 
           <Link href="/contacto" className="hover:text-yellow-400 transition-colors">
             {t.contact}
